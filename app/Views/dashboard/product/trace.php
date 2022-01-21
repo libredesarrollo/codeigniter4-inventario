@@ -1,65 +1,105 @@
-<p>
+<h1 class="text-center">
     Ventas y compras de <?= $product->name ?>
-</p>
+</h1>
+
+<hr>
+<div class="card mb-2" style="width: 200px;">
+    <div class="card-header">
+        Características
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            Precio <?= $product->price ?>
+        </li>
+        <li class="list-group-item">
+            Última Entrada <?= $product->entry ?>
+        </li>
+        <li class="list-group-item">
+            Última Salida <?= $product->exit ?>
+        </li>
+    </ul>
+</div>
 
 
-<ul>
-    <li>
-        Precio <?= $product->price ?>
-    </li>
-    <li>
-        Última Entrada <?= $product->entry ?>
-    </li>
-    <li>
-        Última Salida <?= $product->exit ?>
-    </li>
-</ul>
+<div class="card">
 
-<h3>Filtro</h3>
-
-<form method="get" id="formFilter">
-    <select name="type">
-        <option value="">Tipos</option>
-        <option <?= ($typeId == "exit") ? "selected" : "" ?> value="exit">Salida</option>
-        <option <?= ($typeId == "entry") ? "selected" : "" ?> value="entry">Entrada</option>
-    </select>
-
-    <select name="user_id">
-        <option value="">Usuarios</option>
-        <?php foreach ($users as $u) : ?>
-            <option <?= ($u->id == $userId) ? "selected" : "" ?> value="<?= $u->id ?>"><?= $u->username ?></option>
-        <?php endforeach ?>
-    </select>
-
-    <br>
-
-    <h4>Busqueda</h4>
-
-    <input value="<?= $search ?>" type="text" name="search" placeholder="Buscar">
+    <div class="card-header">
+        <h3>Filtro</h3>
+    </div>
 
 
-    <h3>Cantidades</h3>
-    <label for="check_cant">
-        Activar
-        <input type="checkbox" name="check_cant" id="check_cant" checked>
-    </label>
-    <br>
-    <label for="min_cant">
-        Minimo <span><?= $minCant ? $minCant : 0 ?></span>:
-        <input type="range" name="min_cant" value="<?= $minCant ? $minCant : 0 ?>" min="0" max="90" step="1">
-    </label>
-    <br>
-    <label for="max_cant">
-        Maximo <span><?= $maxCant ? $maxCant : 100 ?></span>:
-        <input type="range" name="max_cant" value="<?= $maxCant ? $maxCant : 100 ?>" min="10" max="100" step="1">
-    </label>
-    <br>
-    <button type="submit">Enviar</button>
 
-    <a href="<?= route_to('product.trace',$product->id) ?>">Limpiar</a>
-</form>
+    <form method="get" id="formFilter" class="m-0">
 
-<table>
+        <div class="card-body border-bottom">
+            <h4>Busqueda</h4>
+
+            <div class="p-2">
+                <input class="form-control mb-2" value="<?= $search ?>" type="text" name="search" placeholder="Buscar">
+
+                <div class="row ">
+
+
+
+                    <div class="col">
+                        <select class="form-control" name="type">
+                            <option value="">Tipos</option>
+                            <option <?= ($typeId == "exit") ? "selected" : "" ?> value="exit">Salida</option>
+                            <option <?= ($typeId == "entry") ? "selected" : "" ?> value="entry">Entrada</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select class="form-control" name="user_id">
+                            <option value="">Usuarios</option>
+                            <?php foreach ($users as $u) : ?>
+                                <option <?= ($u->id == $userId) ? "selected" : "" ?> value="<?= $u->id ?>"><?= $u->username ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="card-body">
+
+            <h3>Cantidades</h3>
+
+            <div class="p-2">
+                <label class="d-block" for="check_cant">
+                    Activar
+                    <input type="checkbox" name="check_cant" id="check_cant" checked>
+                </label>
+
+                <label class="d-block" for="min_cant">
+                    Minimo <span><?= $minCant ? $minCant : 0 ?></span>:
+                    <input type="range" name="min_cant" value="<?= $minCant ? $minCant : 0 ?>" min="0" max="90" step="1">
+                </label>
+
+                <label class="d-block" for="max_cant">
+                    Maximo <span><?= $maxCant ? $maxCant : 100 ?></span>:
+                    <input type="range" name="max_cant" value="<?= $maxCant ? $maxCant : 100 ?>" min="10" max="100" step="1">
+                </label>
+            </div>
+
+
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-success" type="submit">Enviar</button>
+
+            <a class="float-end btn btn-flat" href="<?= route_to('product.trace', $product->id) ?>">Limpiar</a>
+        </div>
+
+    </form>
+
+
+</div>
+
+
+<table class="table mt-3">
     <thead>
         <tr>
             <th>
@@ -128,8 +168,14 @@
         <?php endforeach ?>
         <tr>
 
-            <td colspan="8">Total</td>
-            <td><?= $total ?></td>
+            <td colspan="8">
+                <span class="fw-bold">Total</span>
+            </td>
+            <td>
+                <span class="fw-bold text-success">
+                    <?= $total ?>
+                </span>
+            </td>
 
         </tr>
     </tbody>

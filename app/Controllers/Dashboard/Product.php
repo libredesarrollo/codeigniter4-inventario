@@ -68,8 +68,8 @@ class Product extends BaseController
             'max_cant' => 'is_natural',
         ]);
 
-        if (!$res)
-            echo "Error";
+        // if (!$res)
+        //     echo "Error";
 
         $query = $productModel->asObject()->select("pc.*, u.email, puc.description, puc.direction")
             ->join('products_control as pc', 'pc.product_id = products.id')

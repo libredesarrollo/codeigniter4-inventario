@@ -1,53 +1,80 @@
-<a href="/dashboard/product/new"> Crear</a>
+<a href="/dashboard/product/new" class="btn btn-primary"> Crear</a>
+
+<div class="modal" tabindex="-1" id="blockSelectUser">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gestión ventas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
 
 
-<div id="blockSelectUser" style="display: none;">
-    <select class="user">
-        <?php foreach ($users as $key => $u) : ?>
-            <option value="<?= $u->id ?>"><?= $u->username ?></option>
-        <?php endforeach ?>
-    </select>
+                <select class="form-control user">
+                    <?php foreach ($users as $key => $u) : ?>
+                        <option value="<?= $u->id ?>"><?= $u->username ?></option>
+                    <?php endforeach ?>
+                </select>
 
-    <label class="errorDescription"></label>
-    <textarea class="description" placeholder="Desripción"></textarea>
-    <label class="errorDirection"></label>
-    <textarea class="direction" placeholder="Direción"></textarea>
+                <label class="errorDescription"></label>
+                <textarea class="form-control description" placeholder="Desripción"></textarea>
+                <label class="errorDirection"></label>
+                <textarea class="form-control direction" placeholder="Direción"></textarea>
 
-    <button class="user">
-        Enviar
-    </button>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="user btn btn-success">
+                    Enviar
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<form>
-    <label for="category_id">Categorías</label>
-    <select name="category_id" id="category_id">
-        <option value=""></option>
-        <?php foreach ($categories as $c) : ?>
-            <option <?= $category_id == $c->id ? "selected" : "" ?> value="<?= $c->id ?>"><?= $c->name ?></option>
-        <?php endforeach ?>
-    </select>
+<div class="card mt-2">
+    <div class="card-header">
+        <button data-bs-toggle="collapse" data-bs-target="#filters" class="btn btn-sm btn-flat float-end">Ver</button>
+        <h4 class="mb-0">Filtros</h4>
+    </div>
+    <div class="card-body collapse" id="filters">
+        <form>
+            <label for="category_id">Categorías</label>
+            <select class="form-control" name="category_id" id="category_id">
+                <option value=""></option>
+                <?php foreach ($categories as $c) : ?>
+                    <option <?= $category_id == $c->id ? "selected" : "" ?> value="<?= $c->id ?>"><?= $c->name ?></option>
+                <?php endforeach ?>
+            </select>
 
-    <!-- <label for="tags_id">Tags</label> -->
+            <!-- <label for="tags_id">Tags</label> -->
 
-    <!-- <select multiple name="tags_id[]" id="tags_id">
+            <!-- <select multiple name="tags_id[]" id="tags_id">
     <option value=""></option>
         <?php foreach ($tags as $t) : ?>
             <option <?= in_array($t->id, old('tag_id', $productTags)) ? "selected" : "" ?> value="<?= $t->id ?>"><?= $t->name ?></option>
         <?php endforeach ?>
     </select> -->
 
-    <br>
-    <?php foreach ($tags as $t) : ?>
-        <label for="t_<?= $t->id ?>"><?= $t->name ?></label>
-        <input value="<?= $t->id ?>" <?= in_array($t->id, old('tag_id', $productTags)) ? "checked" : "" ?> type="checkbox" name="tags_id[]" id="t_<?= $t->id ?>">
-        <br>
-    <?php endforeach ?>
+            <div class="overflow-auto mt-2" style="max-height:132px">
+                <ul class="list-group">
+                    <?php foreach ($tags as $t) : ?>
+                        <li class="list-group-item">
+                            <label for="t_<?= $t->id ?>"><?= $t->name ?></label>
+                            <input value="<?= $t->id ?>" <?= in_array($t->id, old('tag_id', $productTags)) ? "checked" : "" ?> type="checkbox" name="tags_id[]" id="t_<?= $t->id ?>">
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
 
+            <button type="submit" class="mt-3 user btn btn-success">Enviar</button>
+        </form>
+    </div>
+</div>
 
-    <button type="submit">Enviar</button>
-</form>
-
-<table>
+<table class="table mt-3">
     <thead>
         <tr>
             <th>Id</th>
@@ -67,20 +94,19 @@
                 <td><?= $p->id ?></td>
                 <td><?= $p->name ?></td>
                 <td><?= $p->code ?></td>
-                <td><input type="number" data-id="<?= $p->id ?>" class="entry" value="<?= $p->entry ?>" /></td>
-                <td>
-                <td><input type="number" data-id="<?= $p->id ?>" class="exit" value="<?= $p->exit ?>" /></td>
+                <td><input type="number" data-id="<?= $p->id ?>" class="entry form-control" value="<?= $p->entry ?>" /></td>
+                <td><input type="number" data-id="<?= $p->id ?>" class="exit form-control" value="<?= $p->exit ?>" /></td>
                 </td>
                 <td id="stock_<?= $p->id ?>"><?= $p->stock ?></td>
                 <td><?= $p->price ?></td>
                 <td>
 
                     <form action="/dashboard/product/delete/<?= $p->id ?>" method="POST">
-                        <button>Eliminar</button>
+                        <button class="btn btn-danger btn-sm">Eliminar</button>
                     </form>
 
-                    <a href="/dashboard/product/<?= $p->id ?>/edit">Editar</a>
-                    <a href="<?= route_to('product.trace', $p->id) ?>">Traza</a>
+                    <a class="btn btn-sm btn-flat d-block" href="/dashboard/product/<?= $p->id ?>/edit">Editar</a>
+                    <a class="btn btn-sm btn-flat  d-block" href="<?= route_to('product.trace', $p->id) ?>">Traza</a>
 
                 </td>
             </tr>
@@ -95,6 +121,8 @@
 
 
 <script>
+    modal = new bootstrap.Modal(document.getElementById('blockSelectUser'))
+
     entries = document.querySelectorAll(".entry")
 
     exits = document.querySelectorAll(".exit")
@@ -153,6 +181,9 @@
                 getUsers()
             else
                 populateSelectUser()
+
+            modal.show()
+
         });
     })
 
@@ -177,6 +208,8 @@
                 getUsers()
             else
                 populateSelectUser()
+
+            modal.show()
 
         });
     })
@@ -229,6 +262,9 @@
             .catch((res) => {
                 console.log(res)
             })
+
+            modal.hide()
+
     })
 
     function resetForm() {

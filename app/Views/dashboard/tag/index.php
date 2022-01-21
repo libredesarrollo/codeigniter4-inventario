@@ -1,6 +1,6 @@
-<a href="/dashboard/tag/new" > Crear</a>
+<a href="/dashboard/tag/new" class="btn btn-primary"> Crear</a>
 
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>Id</th>
@@ -17,10 +17,10 @@
                 <td>
 
                     <form action="/dashboard/tag/delete/<?=$t->id ?>" method="POST">
-                        <button>Eliminar</button>
+                        <button class="btn btn-danger btn-sm">Eliminar</button>
                     </form>
 
-                    <a href="/dashboard/tag/<?=$t->id ?>/edit">Editar</a>
+                    <a class="btn btn-sm btn-flat"  href="/dashboard/tag/<?=$t->id ?>/edit">Editar</a>
 
                 </td>
             </tr>
