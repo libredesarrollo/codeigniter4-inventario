@@ -109,7 +109,8 @@ class Product extends BaseController
             $query->where('pc.count <=', $this->request->getGet('max_cant'));
         }
 
-        $searchs = explode(" ", trim($this->request->getGet('search')));
+        if ($this->request->getGet('search'))
+            $searchs = explode(" ", trim($this->request->getGet('search')));
 
         if ($this->request->getGet('search')) {
             //->orGroupStart()
@@ -309,8 +310,7 @@ class Product extends BaseController
             // $query->whereIn('id',$productsId);
 
             $query->join('product_tag as pt', 'pt.product_id = products.id')
-            ->groupBy('id,code,exit,entry,stock,price,name');
-           
+                ->groupBy('id,code,exit,entry,stock,price,name');
         }
 
         $data = [
